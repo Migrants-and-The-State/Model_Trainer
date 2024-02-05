@@ -49,7 +49,7 @@ class Pkl_Dataset(Dataset):
         return len(self.annotations) - 1
 
     def __getitem__(self, index):
-
+#         print(":::::::::::::::",index,self.annotations.iloc[index])
         label = self.annotations.iloc[index, self.labels_col]
         embedding = self.embeddings[self.annotations.iloc[index, self.pkl_index_col]][1]            
         return embedding, label

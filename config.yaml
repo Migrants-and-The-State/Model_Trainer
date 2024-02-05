@@ -1,12 +1,12 @@
 data:
 #   csv_file: 'https://docs.google.com/spreadsheets/d/1zpMUVsyNfKFwkVUwul0pInCFjRCKFBwa4DFLZxTl5_g/export?gid=0&format=csv'
-  train_csv: '/home/ag8172/test/ModelTraining/Images/train1.csv'
-  test_csv: '/home/ag8172/test/ModelTraining/Images/test1.csv'
+  train_csv: '/home/ag8172/test/ModelTraining/Images/train2.csv'
+  test_csv: '/home/ag8172/test/ModelTraining/Images/test2.csv'
   pkl_path: '/home/ag8172/test/Retrieval_Exp/parallel_results.pkl'
   batch_size: 128
 
 model:
-  architecture: 'resnet50'
+  architecture: 'custom'
   num_classes: 3
   pretrained: True
   transfer_learning: False
