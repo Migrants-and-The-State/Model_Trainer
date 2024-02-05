@@ -10,6 +10,7 @@ model:
   num_classes: 3
   pretrained: True
   transfer_learning: False
+  embedding_size: 1536
 
 train:
   epochs: 20

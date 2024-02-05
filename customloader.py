@@ -51,7 +51,7 @@ class Pkl_Dataset(Dataset):
     def __getitem__(self, index):
 
         label = self.annotations.iloc[index, self.labels_col]
-        embedding = self.embeddings[self.annotations.iloc[index, self.pkl_index_col]]            
+        embedding = self.embeddings[self.annotations.iloc[index, self.pkl_index_col]][1]            
         return embedding, label
 
 def get_data_loader(csv_file, labels_col, urls_col, batch_size, transform, pkl_path, pkl_index_col):
