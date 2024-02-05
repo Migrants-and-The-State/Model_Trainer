@@ -38,16 +38,16 @@ def main():
                                    config['train']['image_url'], 
                                    config['data']['batch_size'],
                                    train_transform,
-                                   config['data']['pkl_path'],
-                                   config['train']['pkl_index'])
+                                   config['data'].get('pkl_path',None),
+                                   config['train'].get('pkl_index',None))
 
     test_loader = get_data_loader(config['data']['test_csv'],
                                   config['train']['annotations'], 
                                   config['train']['image_url'],
                                   config['data']['batch_size'],
                                   test_transform,
-                                  config['data']['pkl_path'],
-                                  config['train']['pkl_index'])
+                                  config['data'].get('pkl_path',None),
+                                  config['train'].get('pkl_index',None))
     
     print(f"Url Column :{config['train']['image_url']} \
     \n Labels Column :{config['train']['annotations']}")

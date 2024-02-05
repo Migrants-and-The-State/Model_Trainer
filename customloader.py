@@ -3,10 +3,13 @@ import os
 import requests
 from torchvision import transforms
 from torch.utils.data import Dataset, DataLoader
+import PIL
 from PIL import Image
 import time
 from io import BytesIO
 import pickle
+
+PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
 
 
