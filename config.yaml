@@ -1,0 +1,33 @@
+data:
+#   csv_file: 'https://docs.google.com/spreadsheets/d/1zpMUVsyNfKFwkVUwul0pInCFjRCKFBwa4DFLZxTl5_g/export?gid=0&format=csv'
+  train_csv: '/home/ag8172/test/ModelTraining/Images/train1.csv'
+  test_csv: '/home/ag8172/test/ModelTraining/Images/test.csv'
+  batch_size: 128
+
+model:
+  architecture: 'resnet50'
+  num_classes: 3
+  pretrained: True
+  transfer_learning: False
+
+train:
+  epochs: 20
+  learning_rate: 0.001
+  device: 'cuda'  # Change to 'cpu' if you don't have a GPU
+  image_url: 2
+  annotations: 5
+  
+transforms:
+  train:
+    Resize: [[256, 256]]
+    RandomHorizontalFlip: 
+    ToTensor: 
+    Normalize: [[0.485, 0.456, 0.406], [0.229, 0.224, 0.225]]
+  test:
+    Resize: [[256, 256]]
+    ToTensor: 
+    Normalize: [[0.485, 0.456, 0.406], [0.229, 0.224, 0.225]]
+
+logging:
+    project_name: 'trial_run1'
+    user_name: 'ag8172'
