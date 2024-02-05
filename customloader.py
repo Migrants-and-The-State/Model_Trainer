@@ -6,6 +6,8 @@ from torch.utils.data import Dataset, DataLoader
 from PIL import Image
 import time
 from io import BytesIO
+import pickle
+
 
 
 class CustomImageDataset(Dataset):
@@ -33,10 +35,39 @@ class CustomImageDataset(Dataset):
             
         return image, label
 
-def get_data_loader(csv_file, labels_col, urls_col, batch_size, transform):
-    dataset = CustomImageDataset(csv_file=csv_file, labels_col=labels_col, urls_col=urls_col,
-                                 transform=transform)
+class Pkl_Dataset(Dataset):
+    def __init__(self, csv_file, labels_col, urls_col, transform=None, pkl_path=None):
+        print("Initializng Dataset with file path :::",csv_file)
+        self.annotations = pd.read_csv(csv_file)
+        self.embeddings = loadpkl(pkl_path)
+        self.labels_col = labels_col
+        self.urls_col = urls_col
+        self.transform = transform
+
+    def __len__(self):
+        return len(self.annotations) - 1
+
+    def __getitem__(self, index):
+
+        label = self.annotations.iloc[index, self.labels_col]
+        embedding = self.embeddings[index]            
+        return embedding, label
+
+def get_data_loader(csv_file, labels_col, urls_col, batch_size, transform, pkl_path):
+    if pkl_path:
+        dataset = Pkl_Dataset(csv_file=csv_file, labels_col=labels_col, urls_col=urls_col,
+                                 transform=transform,pkl_path=pkl_path)
+    else:
+        dataset = CustomImageDataset(csv_file=csv_file, labels_col=labels_col, urls_col=urls_col,
+                                    transform=transform)
     return DataLoader(dataset, batch_size=batch_size, shuffle=True)
+
+def loadpkl(path):
+    with open(path, 'rb') as file:
+        # Load the data from the Pickle file
+        pkl_file = pickle.load(file)
+    return pkl_file
+
 
 def download_preprocess_image(url):
     image = None

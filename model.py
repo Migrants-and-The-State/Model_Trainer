@@ -2,12 +2,15 @@ import torch.nn as nn
 import torchvision.models as models
 
 class CustomModel(nn.Module):
-    def __init__(self, architecture, num_classes=2, pretrained=False, transfer_learning=False):
+    def __init__(self, architecture, feature_size = None, num_classes=2, pretrained=False, transfer_learning=False):
         super(CustomModel, self).__init__()
         # Dynamically get the model constructor
         if hasattr(models, architecture):
             model_constructor = getattr(models, architecture)
             self.model = model_constructor(pretrained=pretrained)
+        elif architecture == 'custom' and feature_size:
+            print("Using custom arch")
+            self.model = nn.Linear(feature_size, num_classes)
         else:
             raise ValueError(f"Model architecture '{architecture}' is not recognized.")
     

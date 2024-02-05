@@ -1,7 +1,8 @@
 data:
 #   csv_file: 'https://docs.google.com/spreadsheets/d/1zpMUVsyNfKFwkVUwul0pInCFjRCKFBwa4DFLZxTl5_g/export?gid=0&format=csv'
   train_csv: '/home/ag8172/test/ModelTraining/Images/train1.csv'
-  test_csv: '/home/ag8172/test/ModelTraining/Images/test.csv'
+  test_csv: '/home/ag8172/test/ModelTraining/Images/test1.csv'
+  pkl_path: ''
   batch_size: 128
 
 model:

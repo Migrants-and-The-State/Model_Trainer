@@ -37,13 +37,15 @@ def main():
                                    config['train']['annotations'],
                                    config['train']['image_url'], 
                                    config['data']['batch_size'],
-                                   train_transform)
+                                   train_transform,
+                                   config['data']['pkl_path'])
 
     test_loader = get_data_loader(config['data']['test_csv'],
                                   config['train']['annotations'], 
                                   config['train']['image_url'],
                                   config['data']['batch_size'],
-                                  test_transform)
+                                  test_transform,
+                                  config['data']['pkl_path'])
     
     print(f"Url Column :{config['train']['image_url']} \
     \n Labels Column :{config['train']['annotations']}")
