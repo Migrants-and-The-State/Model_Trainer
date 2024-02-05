@@ -46,7 +46,7 @@ def main():
                                   config['train']['image_url'],
                                   config['data']['batch_size'],
                                   test_transform,
-                                  config['data']['pkl_path']
+                                  config['data']['pkl_path'],
                                   config['train']['pkl_index'])
     
     print(f"Url Column :{config['train']['image_url']} \
