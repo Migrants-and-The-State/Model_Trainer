@@ -52,7 +52,7 @@ def main():
     print(f"Url Column :{config['train']['image_url']} \
     \n Labels Column :{config['train']['annotations']}")
     model = CustomModel(architecture=config['model']['architecture'], 
-                        feature_size=config['model']['embeddings_size'],
+                        feature_size=config['model']['embedding_size'],
                         num_classes=config['model']['num_classes'], 
                         pretrained=config['model']['pretrained'],
                        transfer_learning=config['model']['transfer_learning'])
