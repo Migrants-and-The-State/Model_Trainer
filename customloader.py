@@ -36,13 +36,14 @@ class CustomImageDataset(Dataset):
         return image, label
 
 class Pkl_Dataset(Dataset):
-    def __init__(self, csv_file, labels_col, urls_col, transform=None, pkl_path=None):
+    def __init__(self, csv_file, labels_col, urls_col, transform=None, pkl_path=None, pkl_index_col=None):
         print("Initializng Dataset with file path :::",csv_file)
         self.annotations = pd.read_csv(csv_file)
         self.embeddings = loadpkl(pkl_path)
         self.labels_col = labels_col
         self.urls_col = urls_col
         self.transform = transform
+        self.pkl_index_col = pkl_index_col
 
     def __len__(self):
         return len(self.annotations) - 1
@@ -50,13 +51,14 @@ class Pkl_Dataset(Dataset):
     def __getitem__(self, index):
 
         label = self.annotations.iloc[index, self.labels_col]
-        embedding = self.embeddings[index]            
+        embedding = self.embeddings[self.annotations.iloc[index, self.pkl_index_col]]            
         return embedding, label
 
-def get_data_loader(csv_file, labels_col, urls_col, batch_size, transform, pkl_path):
+def get_data_loader(csv_file, labels_col, urls_col, batch_size, transform, pkl_path, pkl_index_col):
     if pkl_path:
+        print("Loading Embeddings from Pkl")
         dataset = Pkl_Dataset(csv_file=csv_file, labels_col=labels_col, urls_col=urls_col,
-                                 transform=transform,pkl_path=pkl_path)
+                                 transform=transform, pkl_path=pkl_path, pkl_index_col=pkl_index_col)
     else:
         dataset = CustomImageDataset(csv_file=csv_file, labels_col=labels_col, urls_col=urls_col,
                                     transform=transform)

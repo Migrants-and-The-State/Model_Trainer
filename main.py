@@ -38,18 +38,21 @@ def main():
                                    config['train']['image_url'], 
                                    config['data']['batch_size'],
                                    train_transform,
-                                   config['data']['pkl_path'])
+                                   config['data']['pkl_path'],
+                                   config['train']['pkl_index'])
 
     test_loader = get_data_loader(config['data']['test_csv'],
                                   config['train']['annotations'], 
                                   config['train']['image_url'],
                                   config['data']['batch_size'],
                                   test_transform,
-                                  config['data']['pkl_path'])
+                                  config['data']['pkl_path']
+                                  config['train']['pkl_index'])
     
     print(f"Url Column :{config['train']['image_url']} \
     \n Labels Column :{config['train']['annotations']}")
-    model = CustomModel(config['model']['architecture'], 
+    model = CustomModel(architecture=config['model']['architecture'], 
+                        feature_size=config['model']['embeddings_size'],
                         num_classes=config['model']['num_classes'], 
                         pretrained=config['model']['pretrained'],
                        transfer_learning=config['model']['transfer_learning'])
