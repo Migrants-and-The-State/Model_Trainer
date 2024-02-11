@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
+import pandas as pd 
 import wandb
 from tqdm import tqdm
 class Trainer:
@@ -36,7 +37,7 @@ class Trainer:
             avg_loss = self.train_epoch()
             print(f"Epoch [{epoch + 1}/{self.epochs}], Loss: {avg_loss:.4f}")
             wandb.log({"Epoch": epoch, "Loss": avg_loss})
-            self.evaluate()
+            _, _ = self.evaluate()
 
     def evaluate(self):
         self.model.eval()
@@ -59,6 +60,22 @@ class Trainer:
 
         print(f"Accuracy: {accuracy:.4f}, Precision: {precision:.4f}, Recall: {recall:.4f}, F1 Score: {f1:.4f}")
         wandb.log({"Test Accuracy": accuracy, "Test Precision": precision, "Test Recall": recall, "Test F1 Score": f1})
-
+        return all_labels, all_preds
  
+    def generate_predictions_csv(self,csv_file,test_output_file):
+        '''
+        Generates a csv file containing the outputs 
+        csv_file : input csv file (train or test at the moment)
+        test_output_file: output file name
+        '''
+        
+        labels, preds = self.evaluate()
+        annotations = pd.read_csv(csv_file)
+
+        annotations['predictions'] = preds 
+        annotations['labels'] = labels 
+
+        annotations.to_csv(test_output_file,index=False)
+        print(f"Outputs saved at {test_output_file}")
+
 

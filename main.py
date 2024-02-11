@@ -47,7 +47,8 @@ def main():
                                   config['data']['batch_size'],
                                   test_transform,
                                   config['data'].get('pkl_path',None),
-                                  config['train'].get('pkl_index',None))
+                                  config['train'].get('pkl_index',None),
+                                  shuffle=False)
     
     print(f"Url Column :{config['train']['image_url']} \
     \n Labels Column :{config['train']['annotations']}")
@@ -60,6 +61,6 @@ def main():
     wandb.init(project=config['logging']['project_name'], entity=config['logging']['user_name'])
     trainer = Trainer(model, train_loader, test_loader, config['train']['epochs'], config['train']['learning_rate'], config['train']['device'])
     trainer.train()
-
+    trainer.generate_predictions_csv(config['data']['test_csv'], config['data']['preds_csv'])
 if __name__ == '__main__':
     main()

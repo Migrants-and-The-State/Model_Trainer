@@ -57,7 +57,7 @@ class Pkl_Dataset(Dataset):
         embedding = self.embeddings[self.annotations.iloc[index, self.pkl_index_col]][1]            
         return embedding, label
 
-def get_data_loader(csv_file, labels_col, urls_col, batch_size, transform, pkl_path, pkl_index_col):
+def get_data_loader(csv_file, labels_col, urls_col, batch_size, transform, pkl_path, pkl_index_col, shuffle=True):
     if pkl_path:
         print("Loading Embeddings from Pkl")
         dataset = Pkl_Dataset(csv_file=csv_file, labels_col=labels_col, urls_col=urls_col,
@@ -65,7 +65,7 @@ def get_data_loader(csv_file, labels_col, urls_col, batch_size, transform, pkl_p
     else:
         dataset = CustomImageDataset(csv_file=csv_file, labels_col=labels_col, urls_col=urls_col,
                                     transform=transform)
-    return DataLoader(dataset, batch_size=batch_size, shuffle=True)
+    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
 
 def loadpkl(path):
     with open(path, 'rb') as file:

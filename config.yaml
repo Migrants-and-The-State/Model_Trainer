@@ -1,8 +1,9 @@
 data:
 #   csv_file: 'https://docs.google.com/spreadsheets/d/1zpMUVsyNfKFwkVUwul0pInCFjRCKFBwa4DFLZxTl5_g/export?gid=0&format=csv'
-  train_csv: '/home/ag8172/test/ModelTraining/Images/train2.csv'
-  test_csv: '/home/ag8172/test/ModelTraining/Images/test2.csv'
-  pkl_path: '/home/ag8172/test/Retrieval_Exp/parallel_results.pkl'
+  train_csv: './train2.csv'
+  test_csv: './test2.csv'
+  pkl_path: './parallel_results.pkl'
+  preds_csv: './outputs.csv'
   batch_size: 128
 
 model:
