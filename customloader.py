@@ -22,7 +22,7 @@ class CustomImageDataset(Dataset):
         self.transform = transform
 
     def __len__(self):
-        return len(self.annotations) - 1
+        return len(self.annotations)
 
     def __getitem__(self, index):
 #         try:
@@ -49,7 +49,7 @@ class Pkl_Dataset(Dataset):
         self.pkl_index_col = pkl_index_col
 
     def __len__(self):
-        return len(self.annotations) - 1
+        return len(self.annotations)
 
     def __getitem__(self, index):
 #         print(":::::::::::::::",index,self.annotations.iloc[index])

@@ -3,7 +3,7 @@ data:
   train_csv: './train2.csv'
   test_csv: './test2.csv'
   pkl_path: './parallel_results.pkl'
-  preds_csv: './outputs.csv'
+  predictions_csv_name: './outputs.csv'
   batch_size: 128
 
 model:
@@ -16,7 +16,7 @@ model:
 train:
   epochs: 20
   learning_rate: 0.001
-  device: 'cuda'  # Change to 'cpu' if you don't have a GPU
+  device: 'mps'  # Change to 'cpu' if you don't have a GPU or mps for a macbook (m1 or later)
   image_url: 2
   annotations: 3
   pkl_index: 9

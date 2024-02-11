@@ -58,9 +58,9 @@ def main():
                         pretrained=config['model']['pretrained'],
                        transfer_learning=config['model']['transfer_learning'])
     print("Model Successfully created")
-    wandb.init(project=config['logging']['project_name'], entity=config['logging']['user_name'])
+    wandb.init(project=config['logging']['project_name'], entity=config['logging']['user_name'],dir='./wandb/')
     trainer = Trainer(model, train_loader, test_loader, config['train']['epochs'], config['train']['learning_rate'], config['train']['device'])
     trainer.train()
-    trainer.generate_predictions_csv(config['data']['test_csv'], config['data']['preds_csv'])
+    trainer.generate_predictions_csv(config['data']['test_csv'], config['data']['predictions_csv_name'])
 if __name__ == '__main__':
     main()
