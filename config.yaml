@@ -1,25 +1,32 @@
 data:
 #   csv_file: 'https://docs.google.com/spreadsheets/d/1zpMUVsyNfKFwkVUwul0pInCFjRCKFBwa4DFLZxTl5_g/export?gid=0&format=csv'
-  train_csv: './train2.csv'
-  test_csv: './test2.csv'
-  pkl_path: './parallel_results.pkl'
+  train_csv: './data/train4.csv'
+  test_csv: './data/test4.csv'
+  pkl_path: './data/parallel_results.pkl'
   predictions_csv_name: './outputs.csv'
   batch_size: 128
 
 model:
   architecture: 'custom'
-  num_classes: 3
+  num_classes: 4
   pretrained: True
   transfer_learning: False
   embedding_size: 1536
 
 train:
-  epochs: 20
+  epochs: 10
   learning_rate: 0.001
   device: 'mps'  # Change to 'cpu' if you don't have a GPU or mps for a macbook (m1 or later)
   image_url: 2
-  annotations: 3
-  pkl_index: 9
+  annotations: 6
+  pkl_index: 10
+
+inference:
+  inference_csv: './data/full_data.csv'
+  image_url: 2
+  pkl_path: './data/parallel_results.pkl'
+  pkl_index: 10
+
   
 transforms:
   train:

@@ -5,6 +5,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 import pandas as pd 
 import wandb
 from tqdm import tqdm
+import time 
+
 class Trainer:
     def __init__(self, model, dataloader, test_dataloader, epochs, learning_rate, device):
         self.model = model.to(device)
@@ -63,8 +65,9 @@ class Trainer:
         return all_labels, all_preds
  
     def generate_predictions_csv(self,csv_file,test_output_file):
+        #todo: Combine this script and inference script into one
         '''
-        Generates a csv file containing the outputs 
+        Generates a csv file containing the outputs  on the test csv
         csv_file : input csv file (train or test at the moment)
         test_output_file: output file name
         '''
@@ -78,4 +81,25 @@ class Trainer:
         annotations.to_csv(test_output_file,index=False)
         print(f"Outputs saved at {test_output_file}")
 
+
+
+    def inference(self, csv_file, dataloader):
+        '''
+        Runs inference on the csv and attaches labels to it
+        '''
+        st = time.time()
+        data = pd.read_csv(csv_file)
+        
+        self.model.eval()
+        all_preds = list()
+        with torch.no_grad():
+            for inputs, labels in tqdm(dataloader):
+                inputs = inputs.to(self.device)
+                outputs = self.model(inputs)
+                _, preds = torch.max(outputs, 1)
+                all_preds.extend(preds.cpu().numpy())
+
+        data['predictions'] = all_preds
+        data.to_csv(csv_file,index=False)
+        print(f"Inference completed in {time.time() - st}s")
 
