@@ -36,7 +36,7 @@ def main():
     print("Loaded Configs")
 
 
-#     csv_file, labels_col, urls_col, batch_size, transform
+#     csv_file, labels_col, urls_col, batch_size, transform, pickle path to embeddings (if using)
     train_loader = get_data_loader(config['data']['train_csv'], 
                                    config['train']['annotations'],
                                    config['train']['image_url'], 

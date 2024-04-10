@@ -9,15 +9,23 @@ import time
 
 class Trainer:
     def __init__(self, model, dataloader, test_dataloader, epochs, learning_rate, device):
+        ''' 
+        Initializing trainer class to train a model on the data
+        '''
+
         self.model = model.to(device)
         self.dataloader = dataloader
         self.epochs = epochs
-        self.optimizer = optim.SGD(model.parameters(), lr=learning_rate)
-        self.criterion = nn.CrossEntropyLoss()
+        self.optimizer = optim.SGD(model.parameters(), lr=learning_rate) # this is currently standard, can be dynamically obtained from yaml
+        self.criterion = nn.CrossEntropyLoss() # Currently standard, but can be dynamically obtained
         self.device = device
         self.test_dataloader = test_dataloader
         
     def train_epoch(self):
+        ''' 
+        Trains model on one epoch
+
+        '''
         self.model.train()
         total_loss = 0
         for inputs, labels in tqdm(self.dataloader):
@@ -35,13 +43,20 @@ class Trainer:
         return avg_loss
 
     def train(self):
+        ''' 
+        Training code that calls the previous function
+        '''
         for epoch in tqdm(range(self.epochs)):
             avg_loss = self.train_epoch()
             print(f"Epoch [{epoch + 1}/{self.epochs}], Loss: {avg_loss:.4f}")
-            wandb.log({"Epoch": epoch, "Loss": avg_loss})
-            _, _ = self.evaluate()
+            wandb.log({"Epoch": epoch, "Loss": avg_loss}) # Logs the results in an online logger
+            _, _ = self.evaluate() 
 
     def evaluate(self):
+        ''' 
+        Loop to test performance on the validation data
+        '''
+
         self.model.eval()
         all_labels = []
         all_preds = []
@@ -67,9 +82,10 @@ class Trainer:
     def generate_predictions_csv(self,csv_file,test_output_file):
         #todo: Combine this script and inference script into one
         '''
-        Generates a csv file containing the outputs  on the test csv
+        Generates a csv file containing the outputs  on the test csv only
         csv_file : input csv file (train or test at the moment)
         test_output_file: output file name
+        
         '''
         
         labels, preds = self.evaluate()
@@ -85,7 +101,7 @@ class Trainer:
 
     def inference(self, csv_file, dataloader):
         '''
-        Runs inference on the csv and attaches labels to it
+        Runs inference on full data csv and attaches labels to it
         '''
         st = time.time()
         data = pd.read_csv(csv_file)

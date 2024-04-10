@@ -14,6 +14,9 @@ PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
 
 class CustomImageDataset(Dataset):
+    ''' 
+    Initializes a custom image dataset from csv containing urls
+    '''
     def __init__(self, csv_file, labels_col, urls_col, transform=None):
         print("Initializng Dataset with file path :::",csv_file)
         self.annotations = pd.read_csv(csv_file)
@@ -25,20 +28,21 @@ class CustomImageDataset(Dataset):
         return len(self.annotations)
 
     def __getitem__(self, index):
-#         try:
-#         print("DEBUGGING GET ITEM:::",self.annotations,len(self.annotations))
         label = self.annotations.iloc[index, self.labels_col]
         img_url = self.annotations.iloc[index,self.urls_col]
 
         image = download_preprocess_image(img_url)
         if self.transform:
             image = self.transform(image)
-#         except Exception as e:
-#             print(len(self.annotations),type(self.annotations),self.annotations.columns)
             
         return image, label
 
 class Pkl_Dataset(Dataset):
+    ''' 
+    Instead of downloading the urls, running a forward pass, this uses pkls.
+    Pkl file contains all the embeddings already. It just needs to be opened and mapped to the right indices for embeddings
+    Using pkls saves you more time on forward pass, but you can only use it to train feedforward nns
+    '''
     def __init__(self, csv_file, labels_col, urls_col, transform=None, pkl_path=None, pkl_index_col=None):
         print("Initializng Dataset with file path :::",csv_file)
         self.annotations = pd.read_csv(csv_file)
@@ -58,6 +62,10 @@ class Pkl_Dataset(Dataset):
         return embedding, label
 
 def get_data_loader(csv_file, labels_col, urls_col, batch_size, transform, pkl_path, pkl_index_col, shuffle=True):
+    ''' 
+    Creates a dataloader to use for training 
+    From a pkl file or a csv file
+    '''
     if pkl_path:
         print("Loading Embeddings from Pkl")
         dataset = Pkl_Dataset(csv_file=csv_file, labels_col=labels_col, urls_col=urls_col,
@@ -75,6 +83,10 @@ def loadpkl(path):
 
 
 def download_preprocess_image(url):
+    ''' 
+    Function to download image urls and load images to be used by models.
+    '''
+
     image = None
     try:
         response = requests.get(url, timeout=5)  # Set timeout as per your requirement
