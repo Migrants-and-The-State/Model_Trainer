@@ -10,7 +10,7 @@ class CustomModel(nn.Module):
 
 
         # Dynamically get the model constructor
-        if hasattr(models, architecture): # Model constructor here is (ResNet50, ResNet18, etc)
+        if hasattr(models, architecture): # Model constructor here is (resnet50, resnet18, etc)
             model_constructor = getattr(models, architecture)
             self.model = model_constructor(pretrained=pretrained)
         elif architecture == 'custom' and feature_size: # Use Custom Architecture when you're using a pkl file

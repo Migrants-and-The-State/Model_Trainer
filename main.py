@@ -75,7 +75,9 @@ def main():
 
     # if theres a mention of inference in config, take those columns and run it 
     if config.get('inference') != None:
+
         print("Inference has been requested.. Performing inference..")
+
         inference_loader = get_data_loader(
             config['inference']['inference_csv'],
             0,  # putting dummy here as we won't really use it for anything anyways
@@ -86,6 +88,7 @@ def main():
             config['inference'].get('pkl_index',None), #if idx pointing to the index in the pkl file containing embeddings for the image
             shuffle=False
         )
+        
         trainer.inference(config['inference']['inference_csv'], inference_loader)
 
 if __name__ == '__main__':
