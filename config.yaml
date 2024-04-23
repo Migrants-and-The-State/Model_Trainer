@@ -2,7 +2,7 @@ data:
 #   csv_file: 'https://docs.google.com/spreadsheets/d/1zpMUVsyNfKFwkVUwul0pInCFjRCKFBwa4DFLZxTl5_g/export?gid=0&format=csv'
   train_csv: './data/train4.csv'
   test_csv: './data/test4.csv'
-  pkl_path: './data/parallel_results.pkl'
+  pkl_path: './data/parallel_results.pkl'  # to store embeddings of any neural net architecture
   predictions_csv_name: './outputs.csv'
   batch_size: 128
 
