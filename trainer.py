@@ -119,3 +119,9 @@ class Trainer:
         data.to_csv(csv_file,index=False)
         print(f"Inference completed in {time.time() - st}s")
 
+    def save(self, model_path):
+        ''' 
+        saves the model in the path
+        '''
+        # TODO: save best model
+        torch.save(self.model, model_path)

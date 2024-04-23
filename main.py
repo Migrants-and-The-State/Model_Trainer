@@ -74,7 +74,7 @@ def main():
     trainer.generate_predictions_csv(config['data']['test_csv'], config['data']['predictions_csv_name'])
 
     # if theres a mention of inference in config, take those columns and run it 
-    if config.get('inference') != None:
+    if config.get('inference') is None:
 
         print("Inference has been requested.. Performing inference..")
 
@@ -91,5 +91,6 @@ def main():
         
         trainer.inference(config['inference']['inference_csv'], inference_loader)
 
+    trainer.save(config['model'].get('model_path',"outputmodel.pth"))
 if __name__ == '__main__':
     main()

@@ -12,6 +12,7 @@ model:
   pretrained: True
   transfer_learning: False
   embedding_size: 1536
+  model_path: "linear_layer.pth"
 
 train:
   epochs: 10
