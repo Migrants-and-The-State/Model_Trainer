@@ -91,6 +91,6 @@ def main():
         
         trainer.inference(config['inference']['inference_csv'], inference_loader)
 
-    trainer.save(config['model'].get('model_path',"outputmodel.pth"))
+    trainer.save(trainer.model, config['model'].get('model_path',"outputmodel.pth"))
 if __name__ == '__main__':
     main()
